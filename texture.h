@@ -27,18 +27,6 @@ public:
 private:
 	const char* TEXTURE[MAX_TEXTURE] =
 	{
-		"data/TEXTURE/bg-back.png",
-		"data/TEXTURE/bg-stars.png",
-		"data/TEXTURE/bg_planettop.png",
-		"data/TEXTURE/bg_planetunder.png",
-		"data/TEXTURE/ship2.png",
-		"data/TEXTURE/enemy001.png",
-		"data/TEXTURE/enemy004.png",
-		"data/TEXTURE/enemy003.png",
-		"data/TEXTURE/effect000.jpg",
-		"data/TEXTURE/explosion100.png",
-		"data/TEXTURE/bullet2.png",
-		"data/TEXTURE/bullet.png",
 		"data/TEXTURE/num001.png",
 		"data/TEXTURE/pause.png",
 		"data/TEXTURE/time.png",

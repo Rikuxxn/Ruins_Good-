@@ -132,10 +132,10 @@ HRESULT CObjectX::Init(void)
 				// テクスチャの登録
 				m_nIdxTexture[nCntMat] = pTexture->RegisterX(pMat[nCntMat].pTextureFilename);
 			}
-			//else
-			//{// テクスチャが存在しない
-			//	m_nIdxTexture[nCntMat] = -1;
-			//}
+			else
+			{// テクスチャが存在しない
+				m_nIdxTexture[nCntMat] = -1;
+			}
 		}
 	}
 
