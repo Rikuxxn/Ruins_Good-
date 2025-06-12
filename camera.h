@@ -1,0 +1,37 @@
+//=============================================================================
+//
+// カメラ処理 [camera.h]
+// Author : TANEKAWA RIKU
+//
+//=============================================================================
+#ifndef _CAMERA_H_//このマクロ定義がされていなかったら
+#define _CAMERA_H_//2重インクルード防止のマクロ定義
+
+#include "main.h"
+
+class CCamera
+{
+public:
+	CCamera();
+	~CCamera();
+
+	HRESULT Init(void);
+	void Uninit(void);
+	void Update(void);
+	void SetCamera(void);
+	void EditCamera(void);
+	D3DXVECTOR3 GetRot(void);
+
+private:
+	D3DXVECTOR3 m_posV;			// 視点
+	D3DXVECTOR3 m_posVDest;		// 目的の視点
+	D3DXVECTOR3 m_posR;			// 注視点
+	D3DXVECTOR3 m_posRDest;		// 目的の注視点
+	D3DXVECTOR3 m_vecU;			// 上方向ベクトル
+	D3DXMATRIX m_mtxProjection;	// プロジェクションマトリックス
+	D3DXMATRIX m_mtxView;		// ビューマトリックス
+	D3DXVECTOR3 m_rot;			// 向き
+	float m_fDistance;			// 視点から注視点の距離
+};
+
+#endif

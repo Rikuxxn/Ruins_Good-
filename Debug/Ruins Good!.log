@@ -1,0 +1,3 @@
+﻿  player.cpp
+C:\Users\student\source\repos\Ruins Good!\player.cpp(162,8): warning C4189: 'isStickForward': ローカル変数が初期化されましたが、参照されていません
+  Ruins Good!.vcxproj -> C:\Users\student\source\repos\Ruins Good!\Debug\Ruins Good!.exe
