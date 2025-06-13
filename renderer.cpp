@@ -171,29 +171,25 @@ void CRenderer::Draw(int fps)
 
 //#ifdef _DEBUG
 
-		//CPlayer* pPlayer = CManager::GetPlayer();	// プレイヤーの取得
+		CPlayer* pPlayer = CManager::GetPlayer();	// プレイヤーの取得
 		CCamera* pCamera = CManager::GetCamera();	// カメラの取得
 
 		// FPS値のデバッグ表示
 		m_pDebug->Print("FPS:%d", fps);
 		m_pDebug->Draw(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 0, 0);
 
+		if (pPlayer && pPlayer->GetPlayerUse() == true)
+		{
+			D3DXVECTOR3 Pos = pPlayer->GetPos();
 
-		//if (pPlayer && CPlayer::GetPlayerUse() == true)
-		//{
-
-		//	D3DXVECTOR3 Pos = pPlayer->GetPos();
-
-		//	m_pDebug->Print("プレイヤーの体力 : (%d)", CPlayer::GetLife());
-		//	m_pDebug->Draw(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f), 0, 20);
-		//	m_pDebug->Print("プレイヤーの位置 : (X %.1f,Y %.1f,Z %.1f)", Pos.x, Pos.y, Pos.z);
-		//	m_pDebug->Draw(D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f), 0, 40);
-		//}
-		//else
-		//{
-		//	m_pDebug->Print("プレイヤーなし（死亡 or 未生成）");
-		//	m_pDebug->Draw(D3DXCOLOR(1.0f, 0.5f, 0.0f, 1.0f), 0, 20);
-		//}
+			m_pDebug->Print("プレイヤーの位置 : (X %.1f,Y %.1f,Z %.1f)", Pos.x, Pos.y, Pos.z);
+			m_pDebug->Draw(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 0, 20);
+		}
+		else
+		{
+			m_pDebug->Print("プレイヤーなし（死亡 or 未生成）");
+			m_pDebug->Draw(D3DXCOLOR(1.0f, 0.5f, 0.0f, 1.0f), 0, 20);
+		}
 
 		// カメラの角度の取得
 		D3DXVECTOR3 rot = pCamera->GetRot();

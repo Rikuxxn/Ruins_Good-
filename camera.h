@@ -15,11 +15,21 @@ public:
 	CCamera();
 	~CCamera();
 
+	// カメラの種類
+	typedef enum
+	{
+		MODE_EDIT = 0,	// エディターカメラ
+		MODE_GAME,		// ゲームカメラ
+		MODE_MAX
+	}MODE;
+
 	HRESULT Init(void);
 	void Uninit(void);
 	void Update(void);
 	void SetCamera(void);
 	void EditCamera(void);
+	void GameCamera(void);
+	void CameraWithGamepad(float stickX, float stickY);
 	D3DXVECTOR3 GetRot(void);
 
 private:
@@ -32,6 +42,7 @@ private:
 	D3DXMATRIX m_mtxView;		// ビューマトリックス
 	D3DXVECTOR3 m_rot;			// 向き
 	float m_fDistance;			// 視点から注視点の距離
+	MODE m_Mode;				// カメラのモード
 };
 
 #endif

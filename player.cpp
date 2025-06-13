@@ -29,6 +29,7 @@ CPlayer::CPlayer()
 	m_playerUse = true;								// 使われているかどうか
 	m_pShadow = NULL;								// 影へのポインタ
 	m_pMotion = NULL;								// モーションへのポインタ
+	m_currentMotion = CMotion::TYPE_NEUTRAL;
 }
 //=======================================
 // デストラクタ
@@ -139,54 +140,56 @@ void CPlayer::Update(void)
 	// 移動入力があるか判定するフラグ
 	bool bIsMoving = false;
 
-	// 一人称 ゲームパッドの移動処理
-	if (pInputJoypad->GetStick() == true)
+	// ゲームパッドの移動処理
+	if (pInputJoypad->GetStick() == true && pStick != NULL)
 	{
 		// 左スティックの入力を取得
 		float stickX = pStick->Gamepad.sThumbLX;
 		float stickY = pStick->Gamepad.sThumbLY;
 
+		// スティックのベクトル長を計算
+		float magnitude = sqrtf(stickX * stickX + stickY * stickY);
+
 		// デッドゾーン処理
 		const float DEADZONE = 10922.0f;
-
-		if (fabsf(stickX) < DEADZONE)
+		if (magnitude < DEADZONE)
 		{
 			stickX = 0.0f;
-		}
-		if (fabsf(stickY) < DEADZONE)
-		{
 			stickY = 0.0f;
 		}
-
-		// スティックが前方向に倒されているかチェック
-		bool isStickForward = (stickY > DEADZONE);
-
-		// 正規化
-		float magnitude = sqrtf(stickX * stickX + stickY * stickY);
-		if (magnitude > 0.0f)
+		else
 		{
+			// 正規化
 			stickX /= magnitude;
 			stickY /= magnitude;
+
+			// 倒し具合を 0.0～1.0 にマッピング
+			float normalizedMagnitude = (magnitude - DEADZONE) / (32767.0f - DEADZONE);
+			normalizedMagnitude = min(normalizedMagnitude, 1.0f);
+
+			// スティックの方向ベクトルに倒し具合を掛ける
+			stickX *= normalizedMagnitude;
+			stickY *= normalizedMagnitude;
+
+			// カメラの回転を取得
+			float cameraYaw = CamRot.y;
+
+			// 移動ベクトル計算
+			float moveX = -(stickX * cosf(cameraYaw) + stickY * sinf(cameraYaw));
+			float moveZ = stickX * sinf(-cameraYaw) + stickY * cosf(cameraYaw);
+
+			// 移動方向反転
+			moveZ = -moveZ;
+
+			// プレイヤーの移動更新（通常速度）
+			m_move.x += moveX * PLAYER_SPEED;
+			m_move.z += moveZ * PLAYER_SPEED;
+
+			// プレイヤーの向きを更新
+			m_rotDest.y = atan2f(-moveX, -moveZ);
+
+			bIsMoving = true;
 		}
-
-		// カメラの回転を取得
-		float cameraYaw = CamRot.y;
-
-		// 移動ベクトル計算
-		float moveX = -(stickX * cosf(cameraYaw) + stickY * sinf(cameraYaw));
-		float moveZ = stickX * sinf(-cameraYaw) + stickY * cosf(cameraYaw);
-
-		// 移動方向反転
-		moveZ = -moveZ;
-
-		// プレイヤーの移動更新（通常速度）
-		m_move.x += moveX * PLAYER_SPEED;
-		m_move.z += moveZ * PLAYER_SPEED;
-
-		// プレイヤーの向きを更新
-		m_rotDest.y = atan2f(-moveX, -moveZ);
-
-		bIsMoving = true;
 	}
 
 	if (pInputKeyboard->GetPress(DIK_A) == true)
@@ -270,22 +273,20 @@ void CPlayer::Update(void)
 	}
 
 	// モーション切り替え
-	static CMotion::TYPE currentMotion = CMotion::TYPE_NEUTRAL;
-
 	if (bIsMoving)
 	{
-		if (currentMotion != CMotion::TYPE_MOVE)
+		if (m_currentMotion == CMotion::TYPE_NEUTRAL)
 		{
-			m_pMotion->StartBlendMotion(CMotion::TYPE_MOVE, 15);
-			currentMotion = CMotion::TYPE_MOVE;
+			m_pMotion->StartBlendMotion(CMotion::TYPE_MOVE, 10);
+			m_currentMotion = CMotion::TYPE_MOVE;
 		}
 	}
 	else
 	{
-		if (currentMotion != CMotion::TYPE_NEUTRAL)
+		if (m_currentMotion == CMotion::TYPE_MOVE)
 		{
-			m_pMotion->StartBlendMotion(CMotion::TYPE_NEUTRAL, 20);
-			currentMotion = CMotion::TYPE_NEUTRAL;
+			m_pMotion->StartBlendMotion(CMotion::TYPE_NEUTRAL, 10);
+			m_currentMotion = CMotion::TYPE_NEUTRAL;
 		}
 	}
 

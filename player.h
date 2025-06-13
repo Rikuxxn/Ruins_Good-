@@ -43,6 +43,7 @@ private:
 	bool m_playerUse;					// 使われているかどうか
 	CShadow* m_pShadow;					// 影へのポインタ
 	CMotion* m_pMotion;					// モーションへのポインタ
+	CMotion::TYPE m_currentMotion;		// 現在のモーション
 };
 
 #endif

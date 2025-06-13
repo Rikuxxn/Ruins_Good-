@@ -22,6 +22,7 @@ public:
 	virtual HRESULT Init(HINSTANCE hInstance);
 	virtual void Uninit(void);
 	virtual void Update(void) = 0;
+	LPDIRECTINPUTDEVICE8 GetDevice(void) { return m_pDevice; }
 protected:
 	static LPDIRECTINPUT8 m_pInput;		// DirectInputオブジェクトへのポインタ
 	LPDIRECTINPUTDEVICE8 m_pDevice;		// 入力デバイスへのポインタ
@@ -108,8 +109,9 @@ public:
 	bool GetPress(int button);
 	bool GetTrigger(int button);
 	bool GetRelease(int button);
+	bool GetMouseState(DIMOUSESTATE* mouseState);
 	static int GetWheel(void);
-	void SetCursorVisibility(bool visible);
+	static void SetCursorVisibility(bool visible);
 private:
 	static DIMOUSESTATE m_mouseState;			// マウスの状態
 };

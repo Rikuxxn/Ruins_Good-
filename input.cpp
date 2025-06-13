@@ -91,7 +91,7 @@ HRESULT CInputKeyboard::Init(HINSTANCE hInstance, HWND hWnd)
 {
 	// 入力の初期化
 	CInput::Init(hInstance);
-	
+
 	// 入力デバイス(キーボード)の生成
 	if (FAILED(m_pInput->CreateDevice(GUID_SysKeyboard, &m_pDevice, NULL)))
 	{
@@ -459,6 +459,45 @@ bool CInputMouse::GetRelease(int button)
 
 	oldState = m_mouseState;  // Update previous state
 	return release;
+}
+//=====================================================
+// マウスの状態
+//=====================================================
+bool CInputMouse::GetMouseState(DIMOUSESTATE* mouseState)
+{
+	// マウスデバイスを取得
+	LPDIRECTINPUTDEVICE8 pMouse = GetDevice();
+
+	if (pMouse == NULL)
+	{
+		return false;
+	}
+
+	// マウスの状態を取得(長いから代入した)
+	HRESULT hr = pMouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)mouseState);
+
+	if (FAILED(hr))
+	{
+		// 入力デバイスがリセットされている場合、再取得を試みる
+		if (hr == DIERR_INPUTLOST || hr == DIERR_NOTACQUIRED)
+		{
+			pMouse->Acquire();
+
+			// 再取得を試みる
+			hr = pMouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)mouseState);
+			if (FAILED(hr))
+			{
+				return false;
+			}
+		}
+		else
+		{
+			//エラーの場合
+			return false;
+		}
+	}
+
+	return true; // 正常に取得できた場合
 }
 //=====================================================
 // マウスホイールのスクロール量を取得する関数

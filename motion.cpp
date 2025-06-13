@@ -483,9 +483,9 @@ void CMotion::StartBlendMotion(TYPE motionTypeBlend, int nFrameBlend)
 	m_nFrameBlend = nFrameBlend;
 	m_nCounterBlend = 0;
 
-	// MOVEモーションの先頭からスタートするようにする（最も自然）
-	m_nKeyBlend = m_nKey;
-	m_nCounterMotionBlend = m_nCounterMotion;
+	// 先頭からスタート
+	m_nKeyBlend = 0;
+	m_nCounterMotionBlend = 0;
 
 	m_bBlendMotion = true;
 

@@ -135,7 +135,7 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd)
 	CObjectX::Create("data/MODELS/wall.x", D3DXVECTOR3(500.0f, 110.0f, 0.0f), D3DXVECTOR3(0.0f, 90.0f, 0.0f));
 
 	// プレイヤーの生成
-	m_pPlayer->Create(D3DXVECTOR3(0.0f, 6.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 6.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//// ビルボードの生成
 	//CObjectBillboard::Create(CObjectBillboard::TYPE_ONE, D3DXVECTOR3(0.0f, 20.0f, -350.0f), 120.0f, 60.0f);
