@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // ビルボード処理 [objectBillboard.h]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #ifndef _OBJECTBILLBOARD_H_// このマクロ定義がされていなかったら
 #define _OBJECTBILLBOARD_H_// 2重インクルード防止のマクロ定義
 
@@ -21,6 +21,7 @@ public:
 	typedef enum
 	{
 		TYPE_ONE = 0,
+		TYPE_LIGHT,
 		TYPE_MAX
 	}TYPE;
 
@@ -34,7 +35,6 @@ public:
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
 	D3DXVECTOR3 m_pos;
-	D3DXVECTOR3 m_dir;
 	TYPE m_nType;
 	D3DXMATRIX m_mtxWorld;
 	float m_fWidth;			// 幅
@@ -43,7 +43,8 @@ private:
 
 	const char* BILLBOARD_TEXTURE[TYPE_MAX] =//ビルボードのテクスチャの設定
 	{
-		"data/TEXTURE/selectBG.png",		// 1
+		"data/TEXTURE/selectBG.png",	// 1
+		"data/TEXTURE/light.png",		// 2
 
 	};
 

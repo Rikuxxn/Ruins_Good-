@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // マネージャー処理 [manager.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "manager.h"
 #include "renderer.h"
 #include "object2D.h"
@@ -112,7 +112,6 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd)
 	// ライトの初期化処理
 	m_pLight->Init();
 
-
 	// テクスチャの生成
 	m_pTexture = new CTexture;
 
@@ -120,22 +119,23 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd)
 	m_pTexture->Load();
 
 	// ライトの設定処理
-	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, -1.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(-1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.9f, 0.9f, 0.9f, 1.0f), D3DXVECTOR3(0.0f, -1.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	//CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f), D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f), D3DXVECTOR3(-1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	CLight::AddLight(D3DLIGHT_DIRECTIONAL, D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f), D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	// メッシュフィールドの生成
 	CMeshfield::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), 1200.0f, 1200.0f);
 
+	// プレイヤーの生成
+	m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 6.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
 	// モデルの生成
 	CObjectX::Create("data/MODELS/bear.x", D3DXVECTOR3(0.0f, 5.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	CObjectX::Create("data/MODELS/wall.x", D3DXVECTOR3(500.0f, 110.0f, 0.0f), D3DXVECTOR3(0.0f, 90.0f, 0.0f));
-
-	// プレイヤーの生成
-	m_pPlayer = CPlayer::Create(D3DXVECTOR3(0.0f, 6.0f, -300.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	CObjectX::Create("data/MODELS/test_block.x", D3DXVECTOR3(-500.0f, 110.0f, 200.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	//// ビルボードの生成
 	//CObjectBillboard::Create(CObjectBillboard::TYPE_ONE, D3DXVECTOR3(0.0f, 20.0f, -350.0f), 120.0f, 60.0f);
@@ -149,8 +149,8 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd)
 	// コロンの生成
 	m_pColon = CColon::Create(D3DXVECTOR3(600.0f + 2 * 42.0f, 10.0f, 0.0f), 42.0f / 2, 58.0f);
 
-	//// ポーズの生成
-	//m_pPause = CPause::Create(D3DXVECTOR3(490.0f, 340.0f, 0.0f), 400.0f, 90.0f);
+	// ポーズの生成
+	m_pPause = CPause::Create(D3DXVECTOR3(490.0f, 340.0f, 0.0f), 400.0f, 90.0f);
 
 	//m_pSound->Play(CSound::SOUND_LABEL_GAMEBGM);
 

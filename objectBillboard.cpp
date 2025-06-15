@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // ビルボード処理 [objectBillboard.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "objectBillboard.h"
 #include "renderer.h"
 #include "manager.h"
@@ -16,7 +16,6 @@ CObjectBillboard::CObjectBillboard()
 	// 値のクリア
 	m_pVtxBuff = NULL;		// 頂点バッファへのポインタ
 	m_pos = D3DXVECTOR3(0.0f,0.0f,0.0f);
-	m_dir = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	m_nType = TYPE_ONE;
 	m_mtxWorld = {};
 	m_fWidth = 0.0f;;			// 幅

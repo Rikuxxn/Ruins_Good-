@@ -1,7 +1,33 @@
-﻿  motion.cpp
+﻿  camera.cpp
+  debugproc.cpp
+  effect.cpp
+  input.cpp
+  light.cpp
+  main.cpp
+C:\Users\student\Desktop\Ruins Good!\Ruins_Good-\main.cpp(18,91): warning C4100: 'lpCmdLine': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\student\Desktop\Ruins Good!\Ruins_Good-\main.cpp(18,65): warning C4100: 'hInstancePrev': 引数は関数の本体部で 1 度も参照されません。
+  manager.cpp
+  meshfield.cpp
+  model.cpp
+  motion.cpp
+  number.cpp
+  object.cpp
+  object2D.cpp
+  object3D.cpp
+  objectBillboard.cpp
+  objectX.cpp
+  particle.cpp
+  pause.cpp
+  player.cpp
+  renderer.cpp
+  コンパイル中...
+  score.cpp
+  shadow.cpp
+  sound.cpp
+  texture.cpp
+  time.cpp
   コード生成しています。
-  2 of 282 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+  Compiler switch has changed, fall back to full compilation.
+  All 296 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   Ruins Good!.vcxproj -> C:\Users\student\Desktop\Ruins Good!\Ruins_Good-\Ruins Good!.exe

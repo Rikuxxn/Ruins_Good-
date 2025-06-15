@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _PARTICLE_H_
-#define _PARTICLE_H_
+#ifndef _PARTICLE_H_// このマクロ定義がされていなかったら
+#define _PARTICLE_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 #include "effect.h"

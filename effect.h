@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _EFFECT_H_
-#define _EFFECT_H_
+#ifndef _EFFECT_H_// このマクロ定義がされていなかったら
+#define _EFFECT_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 #include "object2D.h"

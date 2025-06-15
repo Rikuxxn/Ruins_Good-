@@ -15,12 +15,12 @@
 CPause::CPause(int nPriority) : CObject(nPriority)
 {
 	// 値のクリア
-	m_pVtxBuff = NULL;
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_fWidth = 0.0f;
-	m_fHeight = 0.0f;
-	m_fAlpha = 0;
-	m_fTime = 0.0f;
+	m_pVtxBuff	  = NULL;
+	m_pos		  = INIT_VEC3;
+	m_fWidth	  = 0.0f;
+	m_fHeight	  = 0.0f;
+	m_fAlpha      = 0;
+	m_fTime		  = 0.0f;
 	m_nIdxTexture = 0;
 }
 //=======================================

@@ -162,7 +162,6 @@ void CModel::Update(void)
 	m_pos.x += m_move.x;
 	m_pos.z += m_move.z;
 	m_pos.y += m_move.y;
-
 }
 //=======================================
 // ï`âÊèàóù

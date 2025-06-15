@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _DEBUGPROC_H_
-#define _DEBUGPROC_H_
+#ifndef _DEBUGPROC_H_// このマクロ定義がされていなかったら
+#define _DEBUGPROC_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 

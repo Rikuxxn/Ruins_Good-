@@ -12,9 +12,9 @@
 CParticle::CParticle(int nPriority) : CEffect(nPriority)
 {
 	// 値のクリア
-	m_nType = 0;		// 種類
-	m_nLife = 0;		// 寿命
-	m_nMaxParticle = 0;	// 粒子の最大数
+	m_nType		   = 0;		// 種類
+	m_nLife		   = 0;		// 寿命
+	m_nMaxParticle = 0;		// 粒子の最大数
 }
 //=======================================
 // デストラクタ

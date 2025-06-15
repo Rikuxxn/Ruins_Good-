@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _SOUND_H_
-#define _SOUND_H_
+#ifndef _SOUND_H_// このマクロ定義がされていなかったら
+#define _SOUND_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 

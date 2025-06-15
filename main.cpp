@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // メイン処理 [main.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "main.h"
 #include "renderer.h"
 #include "object.h"
@@ -18,7 +18,7 @@
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstancePrev, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	// メモリリーク検知
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);//メモリリーク検知
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF);// メモリリーク検知
 
 	int nCountFPS = 0;// FPSカウンター
 

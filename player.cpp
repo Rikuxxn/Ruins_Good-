@@ -16,20 +16,21 @@
 CPlayer::CPlayer()
 {
 	// 値のクリア
-	m_pos = INIT_VEC3;								// 位置
-	m_rot = INIT_VEC3;								// 向き
-	m_rotDest = INIT_VEC3;							// 向き
-	m_move = INIT_VEC3;								// 移動量
-	m_mtxWorld = {};								// ワールドマトリックス
+	m_pos			= INIT_VEC3;					// 位置
+	m_rot			= INIT_VEC3;					// 向き
+	m_rotDest		= INIT_VEC3;					// 向き
+	m_move			= INIT_VEC3;					// 移動量
+	m_mtxWorld		= {};							// ワールドマトリックス
+	m_nNumModel		= 0;							// モデル(パーツ)の総数
+	m_playerUse		= true;							// 使われているかどうか
+	m_pShadow		= NULL;							// 影へのポインタ
+	m_pMotion		= NULL;							// モーションへのポインタ
+	m_currentMotion = CMotion::TYPE_NEUTRAL;
+
 	for (int nCnt = 0; nCnt < MAX_PARTS; nCnt++)
 	{
 		m_apModel[nCnt] = {};						// モデル(パーツ)へのポインタ
 	}
-	m_nNumModel = 0;								// モデル(パーツ)の総数
-	m_playerUse = true;								// 使われているかどうか
-	m_pShadow = NULL;								// 影へのポインタ
-	m_pMotion = NULL;								// モーションへのポインタ
-	m_currentMotion = CMotion::TYPE_NEUTRAL;
 }
 //=======================================
 // デストラクタ
@@ -321,7 +322,7 @@ void CPlayer::Update(void)
 	m_move.z += (0.0f - m_move.z) * 0.3f;
 	m_move.y += (0.0f - m_move.y) * 0.1f;
 
-	int nNumModels = 15;
+	int nNumModels = 10;
 
 	// モーションの更新処理
 	m_pMotion->Update(m_apModel, nNumModels);

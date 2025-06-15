@@ -1,13 +1,12 @@
-//=======================================
+//=============================================================================
 //
 // レンダリング処理 [renderer.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "renderer.h"
 #include "object.h"
 #include "object2D.h"
-//#include "player.h"
 #include "manager.h"
 
 // 静的メンバ変数宣言
@@ -19,7 +18,7 @@ CDebugProc* CRenderer::m_pDebug = NULL;
 CRenderer::CRenderer()
 {
 	// 値のクリア
-	m_pD3D = NULL;
+	m_pD3D       = NULL;
 	m_pD3DDevice = NULL;
 }
 //=======================================
@@ -160,7 +159,7 @@ void CRenderer::Draw(int fps)
 	// 画面クリア
 	m_pD3DDevice->Clear(0, NULL,
 		(D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER),
-		D3DCOLOR_RGBA(0, 255, 255, 255), 1.0f, 0);
+		D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
 
 	// 描画開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
@@ -176,14 +175,14 @@ void CRenderer::Draw(int fps)
 
 		// FPS値のデバッグ表示
 		m_pDebug->Print("FPS:%d", fps);
-		m_pDebug->Draw(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 0, 0);
+		m_pDebug->Draw(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0, 0);
 
 		if (pPlayer && pPlayer->GetPlayerUse() == true)
 		{
 			D3DXVECTOR3 Pos = pPlayer->GetPos();
 
 			m_pDebug->Print("プレイヤーの位置 : (X %.1f,Y %.1f,Z %.1f)", Pos.x, Pos.y, Pos.z);
-			m_pDebug->Draw(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 0, 20);
+			m_pDebug->Draw(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0, 20);
 		}
 		else
 		{
@@ -196,7 +195,7 @@ void CRenderer::Draw(int fps)
 
 		// カメラのデバッグ表示
 		m_pDebug->Print("カメラの角度 : (X:%.2f Y:%.2f)", rot.x,rot.y);
-		m_pDebug->Draw(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f), 0, 60);
+		m_pDebug->Draw(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 0, 60);
 
 		//// 操作のデバッグ表示
 		//m_pDebug->Print("通常弾 [SPACE]");

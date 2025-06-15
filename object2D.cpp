@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // 2Dオブジェクト処理 [object2D.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "object2D.h"
 #include "manager.h"
 #include "renderer.h"
@@ -14,22 +14,22 @@
 CObject2D::CObject2D(int nPriority) : CObject(nPriority)
 {
 	// 値のクリア
-	m_pVtxBuff = NULL;
-	m_pos = INIT_VEC3;
-	m_rot = INIT_VEC3;
-	m_move = INIT_VEC3;
-	m_col = D3DCOLOR_ARGB(255, 0, 0, 0);
-	m_fLength = 0.0f;
-	m_fAngle = 0.0f;
-	m_fWidth = 0.0f;
-	m_fHeight = 0.0f;
+	m_pVtxBuff	   = NULL;
+	m_pos		   = INIT_VEC3;
+	m_rot		   = INIT_VEC3;
+	m_move		   = INIT_VEC3;
+	m_col		   = D3DCOLOR_ARGB(255, 0, 0, 0);
+	m_fLength	   = 0.0f;
+	m_fAngle	   = 0.0f;
+	m_fWidth	   = 0.0f;
+	m_fHeight	   = 0.0f;
 	m_nCounterAnim = 0;
 	m_nPatternAnim = 0;
-	m_fUSpeed = 0.0f;
-	m_fVSpeed = 0.0f;
-	m_aPosTexU = 0.0f;
-	m_fTexU = 0.0f;
-	m_fTexV = 0.0f;
+	m_fUSpeed	   = 0.0f;
+	m_fVSpeed	   = 0.0f;
+	m_aPosTexU     = 0.0f;
+	m_fTexU		   = 0.0f;
+	m_fTexV		   = 0.0f;
 }
 //=======================================
 // デストラクタ

@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _SCORE_H_
-#define _SCORE_H_
+#ifndef _SCORE_H_// このマクロ定義がされていなかったら
+#define _SCORE_H_// 2重インクルード防止のマクロ定義
 
 #include "number.h"
 #include "object.h"

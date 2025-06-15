@@ -7,6 +7,8 @@
 #include "light.h"
 #include "renderer.h"
 #include "manager.h"
+#include "objectX.h"
+#include "objectBillboard.h"
 
 // 静的メンバ変数宣言
 int CLight::m_lightCount = 0;
@@ -87,6 +89,13 @@ int CLight::AddLight(D3DLIGHTTYPE type, const D3DXCOLOR& diffuse, const D3DXVECT
     lightInfo.position = position;
     lightInfo.light.Position = position;
 
+//#ifdef DEBUG
+
+    //// ライト用モデルの生成
+    //CObjectX::Create("data/MODELS/test_block.x", position, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+//#endif // DEBUG
+
     D3DXVECTOR3 dir = direction;
     if (D3DXVec3Length(&dir) == 0.0f)
     {
@@ -107,15 +116,17 @@ int CLight::AddLight(D3DLIGHTTYPE type, const D3DXCOLOR& diffuse, const D3DXVECT
     else if (type == D3DLIGHT_SPOT)
     {
         lightInfo.light.Range = 1000.0f;
-        lightInfo.light.Theta = D3DXToRadian(90.0f);
-        lightInfo.light.Phi = D3DXToRadian(40.0f);
+        lightInfo.light.Theta = D3DXToRadian(70.0f);  // 明るく照らす範囲（中心）
+        lightInfo.light.Phi = D3DXToRadian(95.0f);  // 減衰していく外側        
         lightInfo.light.Falloff = 1.0f;
         lightInfo.light.Attenuation0 = 1.0f;
-        lightInfo.light.Attenuation1 = 0.00002f;
-        lightInfo.light.Attenuation2 = 0.0005f;
+        lightInfo.light.Attenuation1 = 0.05f;    // 緩やかな減衰
+        lightInfo.light.Attenuation2 = 0.0f;
     }
 
+    // デバイスの取得
     LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetDevice();
+
     pDevice->SetLight(index, &lightInfo.light);
     pDevice->LightEnable(index, TRUE);
 

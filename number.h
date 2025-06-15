@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _NUMBER_H_
-#define _NUMBER_H_
+#ifndef _NUMBER_H_// このマクロ定義がされていなかったら
+#define _NUMBER_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 

@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // Xファイル処理 [objectX.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "objectX.h"
 #include "renderer.h"
 #include "manager.h"
@@ -15,18 +15,19 @@ CObjectX::CObjectX()
 {
 	// 値のクリア
 	m_nIdxTexture = 0;
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 位置
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 向き
-	m_pMesh = NULL;
-	m_pBuffMat = NULL;								// マテリアルへのポインタ
-	m_dwNumMat = NULL;								// マテリアル数
-	m_mtxWorld = {};								// ワールドマトリックス
-	m_nType = 0;
+	m_pos		  = INIT_VEC3;					// 位置
+	m_rot		  = INIT_VEC3;					// 向き
+	m_pMesh		  = NULL;						// メッシュへのポインタ
+	m_pBuffMat	  = NULL;						// マテリアルへのポインタ
+	m_dwNumMat	  = NULL;						// マテリアル数
+	m_mtxWorld	  = {};							// ワールドマトリックス
+	m_nType		  = 0;							// 種類
+	m_pShadow	  = NULL;						// 影へのポインタ
+
 	for (int nCnt = 0; nCnt < MAX_PATH; nCnt++)
 	{
-		m_szPath[nCnt] = NULL;
+		m_szPath[nCnt] = NULL;					// ファイルパス
 	}
-	m_pShadow = NULL;
 }
 //=======================================
 // デストラクタ

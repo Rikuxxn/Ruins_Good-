@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _TEXTURE_H_//このマクロ定義がされていなかったら
-#define _TEXTURE_H_//2重インクルード防止のマクロ定義
+#ifndef _TEXTURE_H_// このマクロ定義がされていなかったら
+#define _TEXTURE_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 
@@ -38,6 +38,7 @@ private:
 		"data/TEXTURE/playerface.png",
 		"data/TEXTURE/playertex.png",
 		"data/TEXTURE/playertex2.png",
+		"data/TEXTURE/eye.png"
 	};
 
 	LPDIRECT3DTEXTURE9 m_apTexture[MAX_TEXTURE];

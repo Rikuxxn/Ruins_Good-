@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _SHADOW_H_
-#define _SHADOW_H_
+#ifndef _SHADOW_H_// このマクロ定義がされていなかったら
+#define _SHADOW_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 #include "object3D.h"

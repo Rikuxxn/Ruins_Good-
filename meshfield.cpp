@@ -162,14 +162,14 @@ HRESULT CMeshfield::Init(void)
 //=======================================
 void CMeshfield::Uninit(void)
 {
-	//インデックスバッファの解放
+	// インデックスバッファの解放
 	if (m_pIdxBuff != NULL)
 	{
 		m_pIdxBuff->Release();
 		m_pIdxBuff = NULL;
 	}
 
-	//頂点バッファの破棄
+	// 頂点バッファの破棄
 	if (m_pVtxBuff != NULL)
 	{
 		m_pVtxBuff->Release();
@@ -200,36 +200,36 @@ void CMeshfield::Draw(void)
 	CRenderer* renderer = CManager::GetRenderer();
 	LPDIRECT3DDEVICE9 pDevice = renderer->GetDevice();
 
-	//計算用マトリックス
+	// 計算用マトリックス
 	D3DXMATRIX mtxRot, mtxTrans;
 
-	//ワールドマトリックスの初期化
+	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	////向きを反映
+	//// 向きを反映
 	//D3DXMatrixRotationYawPitchRoll(&mtxRot, g_rotMeshfield.y, g_rotMeshfield.x, g_rotMeshfield.z);
 	//D3DXMatrixMultiply(&g_mtxWorldMeshfield, &g_mtxWorldMeshfield, &mtxRot);
 
-	//位置を反映
+	// 位置を反映
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &mtxTrans);
 
-	//ワールドマトリックスを設定
+	// ワールドマトリックスを設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	//頂点バッファをデータストリームに設定
+	// 頂点バッファをデータストリームに設定
 	pDevice->SetStreamSource(0, m_pVtxBuff, 0, sizeof(VERTEX_3D));
 
-	//インデックスバッファをデータストリームに設定
+	// インデックスバッファをデータストリームに設定
 	pDevice->SetIndices(m_pIdxBuff);
 
-	//頂点フォーマットの設定
+	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	//テクスチャの設定
+	// テクスチャの設定
 	pDevice->SetTexture(0, pTexture->GetAddress(m_nIdxTexture));
 
-	//ポリゴンの描画
+	// ポリゴンの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, m_nVertex, 0, m_nPrimitive);
 }
 //=======================================

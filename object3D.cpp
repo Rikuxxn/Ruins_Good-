@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // 3Dオブジェクト処理 [object3D.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "object3D.h"
 #include "texture.h"
 #include "manager.h"
@@ -14,14 +14,14 @@
 CObject3D::CObject3D(int nPriority) : CObject(nPriority)
 {
 	// 値のクリア
-	m_pVtxBuff = NULL;	// 頂点バッファへのポインタ
-	m_pos = INIT_VEC3;	// 位置
-	m_rot = INIT_VEC3;	// 向き
-	m_mtxWorld = {};	// ワールドマトリックス
-	m_fWidth = 0.0f;	// 幅
-	m_fHeight = 0.0f;	// 高さ
-	m_fDepth = 0.0f;	// 奥行き
-	m_nAlpha = 0;		// アルファ値
+	m_pVtxBuff = NULL;		// 頂点バッファへのポインタ
+	m_pos	   = INIT_VEC3;	// 位置
+	m_rot	   = INIT_VEC3;	// 向き
+	m_mtxWorld = {};		// ワールドマトリックス
+	m_fWidth   = 0.0f;		// 幅
+	m_fHeight  = 0.0f;		// 高さ
+	m_fDepth   = 0.0f;		// 奥行き
+	m_nAlpha   = 0;			// アルファ値
 }
 //=======================================
 // デストラクタ

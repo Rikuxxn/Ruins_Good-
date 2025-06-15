@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // オブジェクト処理 [object.cpp]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #include "object.h"
 #include "camera.h"
 #include "manager.h"
@@ -17,8 +17,10 @@ int CObject::m_nNumAll = 0;
 //=======================================
 CObject::CObject(int nPriority)
 {
-	m_nID = 0;
+	m_nID	    = 0;
 	m_nPriority = 0;
+	m_type      = TYPE_NONE;
+
 	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
 	{
 		if (m_apObject[nPriority][nCnt] == NULL)
@@ -30,7 +32,6 @@ CObject::CObject(int nPriority)
 			break;
 		}
 	}
-	m_type = TYPE_NONE;
 }
 //=======================================
 // デストラクタ

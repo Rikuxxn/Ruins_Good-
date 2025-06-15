@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _MOTION_H_
-#define _MOTION_H_
+#ifndef _MOTION_H_// このマクロ定義がされていなかったら
+#define _MOTION_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 #include "model.h"
@@ -31,6 +31,9 @@ public:
 	}TYPE;
 
 	static CMotion* Load(const char* pFilepath, CModel* pModel[], int& nNumModel);
+	void LoadModelInfo(FILE* pFile, char* aString, CModel* pModel[], int& nNumModel, int& nIdx);
+	void LoadCharacterSet(FILE* pFile, char* aString, CModel* pModel[], int nNumModel, int parentIdx[]);
+	void LoadMotionSet(FILE* pFile, char* aString, CMotion* pMotion, int& nCntMotion);
 	void Update(CModel* pModel[], int& nNumModel);
 	void StartBlendMotion(TYPE motionTypeBlend, int nFrameBlend);
 	void SetMotion(TYPE motionType);

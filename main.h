@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // メイン処理 [main.h]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #ifndef _MAIN_H_// このマクロ定義がされていなかったら
 #define _MAIN_H_// 2重インクルード防止のマクロ定義
 
@@ -13,6 +13,8 @@
 #include "dinput.h"												// 入力処理に必要
 #include "Xinput.h"												// ジョイパッド処理に必要
 #include "xaudio2.h"											// サウンド処理に必要
+#include <array>
+#include <string>
 
 // ライブラリのリンク
 #pragma comment(lib,"d3d9.lib")									// 描画処理に必要
@@ -21,6 +23,10 @@
 #pragma comment(lib,"winmm.lib")								// システム時刻取得に必要
 #pragma comment(lib,"dinput8.lib")								// 入力処理に必要
 #pragma comment(lib,"xinput.lib")								// ジョイパッド処理に必要
+
+//#pragma comment(lib,"BulletCollision.lib")
+//#pragma comment(lib,"BulletDynamics.lib")
+//#pragma comment(lib,"LinearMath.lib")
 
 // マクロ定義
 #define CLASS_NAME "WindowClass"								// ウィンドウクラスの名前
@@ -32,6 +38,9 @@
 
 // 初期化用マクロ定義
 #define INIT_VEC3 (D3DXVECTOR3(0.0f,0.0f,0.0f))
+
+// 
+using namespace std;
 
 // 画面の種類
 typedef enum

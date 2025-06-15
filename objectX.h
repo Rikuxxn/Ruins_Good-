@@ -1,9 +1,9 @@
-//=======================================
+//=============================================================================
 //
 // Xファイル処理 [objectX.h]
 // Author : TANEKAWA RIKU
 //
-//=======================================
+//=============================================================================
 #ifndef _OBJECTX_H_// このマクロ定義がされていなかったら
 #define _OBJECTX_H_// 2重インクルード防止のマクロ定義
 
@@ -24,6 +24,7 @@ public:
 	{
 		TYPE_BEAR = 0,
 		TYPE_WALL,
+		TYPE_TEST,
 		TYPE_MAX
 	}MODELTYPE;
 
@@ -44,7 +45,7 @@ private:
 	DWORD m_dwNumMat;					// マテリアル数
 	D3DXMATRIX m_mtxWorld;				// ワールドマトリックス
 	int m_nType;						// 種類
-	char m_szPath[MAX_PATH];
+	char m_szPath[MAX_PATH];			// ファイルパス
 	CShadow* m_pShadow;					// 影へのポインタ
 
 };

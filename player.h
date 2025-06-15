@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+#ifndef _PLAYER_H_// このマクロ定義がされていなかったら
+#define _PLAYER_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 #include "object.h"

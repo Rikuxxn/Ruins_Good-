@@ -17,9 +17,8 @@ int CShadow::m_nIdxTexture = 0;
 CShadow::CShadow()
 {
 	// 値のクリア
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);					// 位置
-	m_mtxWorld = {};										// ワールドマトリックス
-
+	m_pos	   = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		// 位置
+	m_mtxWorld = {};								// ワールドマトリックス
 }
 //=======================================
 // デストラクタ

@@ -4,8 +4,8 @@
 // Author : TANEKAWA RIKU
 //
 //=============================================================================
-#ifndef _TIME_H_
-#define _TIME_H_
+#ifndef _TIME_H_// このマクロ定義がされていなかったら
+#define _TIME_H_// 2重インクルード防止のマクロ定義
 
 #include "main.h"
 #include "object.h"

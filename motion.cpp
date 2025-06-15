@@ -14,22 +14,22 @@
 CMotion::CMotion()
 {
 	// 値のクリア
-	m_motionType = TYPE_NEUTRAL;		// モーションの種類
-	m_nNumMotion = 0;					// モーション総数
-	m_bLoopMotion = false;				// ループするかどうか
-	m_nNumKey = 0;						// キーの総数
-	m_nKey = 0;							// 現在のキーNo.
-	m_nCounterMotion = 0;				// モーションのカウンター
+	m_motionType		  = TYPE_NEUTRAL;	// モーションの種類
+	m_nNumMotion		  = 0;				// モーション総数
+	m_bLoopMotion		  = false;			// ループするかどうか
+	m_nNumKey			  = 0;				// キーの総数
+	m_nKey				  = 0;				// 現在のキーNo.
+	m_nCounterMotion	  = 0;				// モーションのカウンター
 
-	m_bFinishMotion = false;			// 現在のモーションが終了しているかどうか
-	m_bBlendMotion = false;				// ブレンドモーションがあるかどうか
-	m_motionTypeBlend = TYPE_NEUTRAL;	// ブレンドモーションがあるかどうか
-	m_bLoopMotionBlend = false;			// ブレンドモーションがループするかどうか
-	m_nNumKeyBlend = 0;					// ブレンドモーションのキー数
-	m_nKeyBlend = 0;					// ブレンドモーションの現在のキーNo.
-	m_nCounterMotionBlend = 0;			// ブレンドモーションのカウンター
-	m_nFrameBlend = 0;					// ブレンドのフレーム数(何フレームかけてブレンドするか)
-	m_nCounterBlend = 0;				// ブレンドカウンター
+	m_bFinishMotion		  = false;			// 現在のモーションが終了しているかどうか
+	m_bBlendMotion		  = false;			// ブレンドモーションがあるかどうか
+	m_motionTypeBlend	  = TYPE_NEUTRAL;	// ブレンドモーションがあるかどうか
+	m_bLoopMotionBlend	  = false;			// ブレンドモーションがループするかどうか
+	m_nNumKeyBlend        = 0;				// ブレンドモーションのキー数
+	m_nKeyBlend           = 0;				// ブレンドモーションの現在のキーNo.
+	m_nCounterMotionBlend = 0;				// ブレンドモーションのカウンター
+	m_nFrameBlend		  = 0;				// ブレンドのフレーム数(何フレームかけてブレンドするか)
+	m_nCounterBlend       = 0;				// ブレンドカウンター
 
 }
 //=======================================
@@ -49,13 +49,11 @@ CMotion* CMotion::Load(const char* pFilepath, CModel* pModel[], int& nNumModel)
 	pMotion = new CMotion;
 
 	FILE* pFile = fopen(pFilepath, "r");
+	if (!pFile) return NULL;  // ファイルオープン失敗対策
 
 	char aString[MAX_WORD];
 	int nIdx = 0;
 
-	int nCntPos = 0;
-	int nCntRot = 0;
-	int nCntKey = 0;
 	int nCntMotion = 0;
 
 	// 一時的な親のインデックス配列
@@ -72,215 +70,27 @@ CMotion* CMotion::Load(const char* pFilepath, CModel* pModel[], int& nNumModel)
 		{
 			while (true)
 			{
-				fscanf(pFile, "%s", aString);
-
-				if (strcmp(aString, "NUM_MODEL") == 0)
+				if (fscanf(pFile, "%s", aString) == EOF)
 				{
-					fscanf(pFile, "%s", aString); // "="
-
-					if (strcmp(aString, "=") == 0)
-					{
-						fscanf(pFile, "%d", &nNumModel);
-					}
+					break;
 				}
-				else if (strcmp(aString, "MODEL_FILENAME") == 0)
-				{
-					fscanf(pFile, "%s", aString); // "="
-					if (strcmp(aString, "=") == 0)
-					{
-						fscanf(pFile, "%s", aString);
 
-						// モデルの生成
-						pModel[nIdx] = CModel::Create(aString, D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 0, 0));
-						nIdx++;
-					}
+				if (strcmp(aString, "NUM_MODEL") == 0 || strcmp(aString, "MODEL_FILENAME") == 0)
+				{
+					// モデル情報の読み込み処理
+					pMotion->LoadModelInfo(pFile, aString, pModel, nNumModel, nIdx);
 				}
 				else if (strcmp(aString, "CHARACTERSET") == 0)
 				{
-					while (true)
-					{
-						fscanf(pFile, "%s", aString);
-
-						if (strcmp(aString, "PARTSSET") == 0)
-						{
-							int idx = -1;
-							int pIdx = -1;
-							D3DXVECTOR3 pos(0, 0, 0);
-							D3DXVECTOR3 rot(0, 0, 0);
-
-							while (true)
-							{
-								fscanf(pFile, "%s", aString);
-
-								if (strcmp(aString, "INDEX") == 0)
-								{
-									fscanf(pFile, "%s", aString); // "="
-									if (strcmp(aString, "=") == 0)
-									{
-										fscanf(pFile, "%d", &idx);
-									}
-								}
-								else if (strcmp(aString, "PARENT") == 0)
-								{
-									fscanf(pFile, "%s", aString); // "="
-									if (strcmp(aString, "=") == 0)
-									{
-										fscanf(pFile, "%d", &pIdx);
-									}
-								}
-								else if (strcmp(aString, "POS") == 0)
-								{
-									fscanf(pFile, "%s", aString); // "="
-									if (strcmp(aString, "=") == 0)
-									{
-										fscanf(pFile, "%f %f %f", &pos.x, &pos.y, &pos.z);
-									}
-								}
-								else if (strcmp(aString, "ROT") == 0)
-								{
-									fscanf(pFile, "%s", aString); // "="
-									if (strcmp(aString, "=") == 0)
-									{
-										fscanf(pFile, "%f %f %f", &rot.x, &rot.y, &rot.z);
-									}
-								}
-								else if (strcmp(aString, "END_PARTSSET") == 0)
-								{
-									// データ反映
-									if (idx >= 0 && idx < nNumModel && pModel[idx] != NULL)
-									{
-										pModel[idx]->SetPos(pos);
-										pModel[idx]->SetRot(rot);
-
-										parentIdx[idx] = pIdx;
-									}
-									break;
-								}
-							}
-						}
-						else if (strcmp(aString, "END_CHARACTERSET") == 0)
-						{
-							break;
-						}
-					}
+					// キャラの設定処理
+					pMotion->LoadCharacterSet(pFile, aString, pModel, nNumModel, parentIdx);
 				}
-
-				else if (strcmp(&aString[0], "MOTIONSET") == 0)
+				else if (strcmp(aString, "MOTIONSET") == 0)
 				{
-					// モーション数がモーションタイプを上回ったら
-					if (nCntMotion > TYPE_MAX - 1)
-					{// これ以上セットしない
-						continue;
-					}
-
-					while (1)
-					{
-						fscanf(pFile, "%s", &aString[0]);
-
-						if (strcmp(&aString[0], "NUM_KEY") == 0)
-						{// NUM_KEYを読み取ったら
-
-							fscanf(pFile, "%s", &aString[0]);
-
-							if (strcmp(&aString[0], "=") == 0)
-							{// 値を代入
-								fscanf(pFile, "%d", &pMotion->m_aMotionInfo[nCntMotion].nNumKey);
-							}
-
-							while (nCntKey < pMotion->m_aMotionInfo[nCntMotion].nNumKey)
-							{
-								fscanf(pFile, "%s", &aString[0]);
-
-								if (strcmp(&aString[0], "KEYSET") == 0)
-								{
-									while (1)
-									{
-										fscanf(pFile, "%s", &aString[0]);
-
-										if (strcmp(&aString[0], "FRAME") == 0)
-										{// NUM_PARTSを読み取ったら
-
-											fscanf(pFile, "%s", &aString[0]);
-
-											if (strcmp(&aString[0], "=") == 0)
-											{// 値を代入
-												fscanf(pFile, "%d", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].nFrame);
-												break;
-											}
-										}
-									}
-
-									while (1)
-									{
-										fscanf(pFile, "%s", &aString[0]);
-
-										if (strcmp(&aString[0], "KEY") == 0)
-										{
-											while (1)
-											{
-												fscanf(pFile, "%s", &aString[0]);
-
-												if (strcmp(&aString[0], "POS") == 0)
-												{
-
-													fscanf(pFile, "%s", &aString[0]);
-
-													if (strcmp(&aString[0], "=") == 0)
-													{// 値を代入
-														fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntPos].fPosX);
-														fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntPos].fPosY);
-														fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntPos].fPosZ);
-
-														nCntPos++;
-													}
-
-												}
-												if (strcmp(&aString[0], "ROT") == 0)
-												{
-
-													fscanf(pFile, "%s", &aString[0]);
-
-													if (strcmp(&aString[0], "=") == 0)
-													{// 値を代入
-														fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntRot].fRotX);
-														fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntRot].fRotY);
-														fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntRot].fRotZ);
-														nCntRot++;
-													}
-
-												}
-
-												if (strcmp(&aString[0], "END_KEY") == 0)
-												{
-													break;
-												}
-
-											}//while文末
-										}
-
-										if (strcmp(&aString[0], "END_KEYSET") == 0)
-										{
-											nCntKey++;
-											nCntPos = 0;
-											nCntRot = 0;
-											break;
-										}
-									}
-								}
-							}//while文末
-						}
-
-						if (strcmp(&aString[0], "END_MOTIONSET") == 0)
-						{
-							nCntKey = 0;
-							nCntMotion++;
-							break;
-						}
-
-					}//while文末
+					// モーションの読み込み処理
+					pMotion->LoadMotionSet(pFile, aString, pMotion, nCntMotion);
 				}
-
-				if (strcmp(aString, "END_SCRIPT") == 0)
+				else if (strcmp(aString, "END_SCRIPT") == 0)
 				{
 					break;
 				}
@@ -288,7 +98,6 @@ CMotion* CMotion::Load(const char* pFilepath, CModel* pModel[], int& nNumModel)
 		}
 	}
 
-	// ファイルを閉じる
 	fclose(pFile);
 
 	// 親子関係設定
@@ -301,6 +110,218 @@ CMotion* CMotion::Load(const char* pFilepath, CModel* pModel[], int& nNumModel)
 	}
 
 	return pMotion;
+}
+//=======================================
+// モデル情報の読み込み処理
+//=======================================
+void CMotion::LoadModelInfo(FILE* pFile, char* aString, CModel* pModel[], int& nNumModel, int& nIdx)
+{
+	if (strcmp(aString, "NUM_MODEL") == 0)
+	{
+		fscanf(pFile, "%s", aString); // "="
+
+		if (strcmp(aString, "=") == 0)
+		{
+			fscanf(pFile, "%d", &nNumModel);
+		}
+	}
+	else if (strcmp(aString, "MODEL_FILENAME") == 0)
+	{
+		fscanf(pFile, "%s", aString); // "="
+
+		if (strcmp(aString, "=") == 0)
+		{
+			fscanf(pFile, "%s", aString);
+
+			pModel[nIdx] = CModel::Create(aString, D3DXVECTOR3(0, 0, 0), D3DXVECTOR3(0, 0, 0));
+			nIdx++;
+		}
+	}
+}
+//=======================================
+// キャラの設定処理
+//=======================================
+void CMotion::LoadCharacterSet(FILE* pFile, char* aString, CModel* pModel[], int nNumModel, int parentIdx[])
+{
+	while (true)
+	{
+		fscanf(pFile, "%s", aString);
+
+		if (strcmp(aString, "PARTSSET") == 0)
+		{
+			int idx = -1;
+			int pIdx = -1;
+			D3DXVECTOR3 pos(0, 0, 0);
+			D3DXVECTOR3 rot(0, 0, 0);
+
+			while (true)
+			{
+				fscanf(pFile, "%s", aString);
+
+				if (strcmp(aString, "INDEX") == 0)
+				{
+					fscanf(pFile, "%s", aString); // "="
+
+					if (strcmp(aString, "=") == 0)
+					{
+						fscanf(pFile, "%d", &idx);
+					}
+				}
+				else if (strcmp(aString, "PARENT") == 0)
+				{
+					fscanf(pFile, "%s", aString); // "="
+
+					if (strcmp(aString, "=") == 0)
+					{
+						fscanf(pFile, "%d", &pIdx);
+					}
+				}
+				else if (strcmp(aString, "POS") == 0)
+				{
+					fscanf(pFile, "%s", aString); // "="
+
+					if (strcmp(aString, "=") == 0)
+					{
+						fscanf(pFile, "%f %f %f", &pos.x, &pos.y, &pos.z);
+					}
+				}
+				else if (strcmp(aString, "ROT") == 0)
+				{
+					fscanf(pFile, "%s", aString); // "="
+
+					if (strcmp(aString, "=") == 0)
+					{
+						fscanf(pFile, "%f %f %f", &rot.x, &rot.y, &rot.z);
+					}
+				}
+				else if (strcmp(aString, "END_PARTSSET") == 0)
+				{
+					if (idx >= 0 && idx < nNumModel && pModel[idx] != NULL)
+					{
+						pModel[idx]->SetPos(pos);
+						pModel[idx]->SetRot(rot);
+						parentIdx[idx] = pIdx;
+					}
+
+					break;
+				}
+			}
+		}
+		else if (strcmp(aString, "END_CHARACTERSET") == 0)
+		{
+			break;
+		}
+	}
+}
+//=======================================
+// モーションの読み込み処理
+//=======================================
+void CMotion::LoadMotionSet(FILE* pFile, char* aString, CMotion* pMotion, int& nCntMotion)
+{
+	int nCntKey = 0;
+	int nCntPos = 0;
+	int nCntRot = 0;
+
+	// モーション数が最大タイプを超えたら処理しない
+	if (nCntMotion > TYPE_MAX - 1)
+	{
+		return;
+	}
+
+	while (true)
+	{
+		fscanf(pFile, "%s", aString);
+
+		if (strcmp(aString, "NUM_KEY") == 0)
+		{
+			fscanf(pFile, "%s", aString);  // "="
+
+			if (strcmp(aString, "=") == 0)
+			{
+				fscanf(pFile, "%d", &pMotion->m_aMotionInfo[nCntMotion].nNumKey);
+			}
+
+			// キーの数だけ読み込む
+			while (nCntKey < pMotion->m_aMotionInfo[nCntMotion].nNumKey)
+			{
+				fscanf(pFile, "%s", aString);
+
+				if (strcmp(aString, "KEYSET") == 0)
+				{
+					while (true)
+					{
+						fscanf(pFile, "%s", aString);
+
+						if (strcmp(aString, "FRAME") == 0)
+						{
+							fscanf(pFile, "%s", aString); // "="
+
+							if (strcmp(aString, "=") == 0)
+							{
+								fscanf(pFile, "%d", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].nFrame);
+								break;
+							}
+						}
+					}
+
+					while (true)
+					{
+						fscanf(pFile, "%s", aString);
+
+						if (strcmp(aString, "KEY") == 0)
+						{
+							while (true)
+							{
+								fscanf(pFile, "%s", aString);
+
+								if (strcmp(aString, "POS") == 0)
+								{
+									fscanf(pFile, "%s", aString); // "="
+
+									if (strcmp(aString, "=") == 0)
+									{
+										fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntPos].fPosX);
+										fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntPos].fPosY);
+										fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntPos].fPosZ);
+										nCntPos++;
+									}
+								}
+								else if (strcmp(aString, "ROT") == 0)
+								{
+									fscanf(pFile, "%s", aString); // "="
+
+									if (strcmp(aString, "=") == 0)
+									{
+										fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntRot].fRotX);
+										fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntRot].fRotY);
+										fscanf(pFile, "%f", &pMotion->m_aMotionInfo[nCntMotion].aKeyInfo[nCntKey].aKey[nCntRot].fRotZ);
+										nCntRot++;
+									}
+								}
+								else if (strcmp(aString, "END_KEY") == 0)
+								{
+									break;
+								}
+							} // END while KEY
+						}
+						else if (strcmp(aString, "END_KEYSET") == 0)
+						{
+							nCntKey++;
+							nCntPos = 0;
+							nCntRot = 0;
+							break;
+						}
+					}
+				}
+			}
+		}
+		else if (strcmp(aString, "END_MOTIONSET") == 0)
+		{
+			nCntKey = 0;
+			nCntMotion++;
+			break;
+		}
+	}
 }
 //=======================================
 // 更新処理

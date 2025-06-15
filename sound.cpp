@@ -12,7 +12,7 @@
 CSound::CSound()
 {
 	// ’l‚ÌƒNƒŠƒA
-	m_pXAudio2 = NULL;
+	m_pXAudio2        = NULL;
 	m_pMasteringVoice = NULL;
 
 	for (int nCnt = 0; nCnt < SOUND_LABEL_MAX; nCnt++)
